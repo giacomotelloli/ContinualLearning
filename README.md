@@ -4,8 +4,14 @@
 ## Abstract
 The aim of this project is to study the effects of 3 continual learnign methods such as :
 - REPLAY METHODS
+    -   [ICarl](https://avalanche-api.continualai.org/en/v0.5.0/generated/avalanche.training.ICaRL.html#avalanche.training.ICaRL)
+    -   [GEM](https://avalanche-api.continualai.org/en/v0.5.0/generated/avalanche.training.GEM.html#avalanche.training.GEM)
 - REGULARIZATION METHODS
+    -   [EWC](https://avalanche-api.continualai.org/en/v0.5.0/generated/avalanche.training.EWC.html#avalanche.training.EWC) 
+    -   [LwF](https://avalanche-api.continualai.org/en/v0.5.0/generated/avalanche.training.LwF.html#avalanche.training.LwF
+    ) 
 - PARAMETER ISOLATION METHODS
+    -   
 
 On a 3D object classification task.
 Using one kind of model from the Avalanche library.
@@ -16,7 +22,7 @@ We will use more than one neural network model , stacked by the network complexi
 - SMALL 
 - MEDIUM 
 - LARGE
-  
+
 ---
 
 Data source : https://vlomonaco.github.io/core50/
