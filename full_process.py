@@ -9,7 +9,7 @@ from avalanche.logging import InteractiveLogger
 # Caricamento del dataset CORe50
 benchmark = CORe50(scenario="ni")
 
-# Definizione del modello
+# Definizione dei 3 tipi di modelli 
 model = SimpleMLP(num_classes=benchmark.n_classes)
 
 # Logger

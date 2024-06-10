@@ -9,9 +9,7 @@ The aim of this project is to study the effects of 3 continual learnign methods 
 - REGULARIZATION METHODS
     -   [EWC](https://avalanche-api.continualai.org/en/v0.5.0/generated/avalanche.training.EWC.html#avalanche.training.EWC) 
     -   [LwF](https://avalanche-api.continualai.org/en/v0.5.0/generated/avalanche.training.LwF.html#avalanche.training.LwF
-    ) 
-- PARAMETER ISOLATION METHODS
-    -   
+    )   
 
 On a 3D object classification task.
 Using one kind of model from the Avalanche library.
@@ -19,9 +17,9 @@ Using one kind of model from the Avalanche library.
 For each CL method will be developed some of the techniques suggested by the paper
 
 We will use more than one neural network model , stacked by the network complexity 
-- SMALL 
-- MEDIUM 
-- LARGE
+- SMALL (SimpleMLP)
+- MEDIUM ()
+- LARGE  ()
 
 ---
 
