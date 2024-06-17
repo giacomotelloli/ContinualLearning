@@ -4,6 +4,8 @@ import torch.nn.functional as F
 from avalanche.benchmarks import SplitMNIST
 from avalanche.training.supervised import EWC
 from avalanche.training.plugins import EvaluationPlugin
+from avalanche.logging import TensorboardLogger
+from torch.utils.tensorboard import SummaryWriter
 from avalanche.evaluation.metrics import accuracy_metrics, loss_metrics, timing_metrics, forgetting_metrics
 from avalanche.benchmarks.classic import CORe50
 from avalanche.logging import InteractiveLogger
@@ -28,49 +30,29 @@ class SimpleCNN(nn.Module):
         x = self.fc2(x)
         return x
 
-# Definizione del modello RNN
-class SimpleRNN(nn.Module):
-    def __init__(self, num_classes=10):
-        super(SimpleRNN, self).__init__()
-        self.rnn = nn.RNN(28, 128, batch_first=True)
-        self.fc = nn.Linear(128, num_classes)
-
-    def forward(self, x):
-        x = x.squeeze(1)  # Rimuovere la dimensione del canale
-        x, _ = self.rnn(x)
-        x = x[:, -1, :]
-        x = self.fc(x)
-        return x
-
-# Definizione del modello Vision Transformer (ViT)
-class SimpleViT(nn.Module):
-    def __init__(self, num_classes=10):
-        super(SimpleViT, self).__init__()
-        self.vit = torch.hub.load('facebookresearch/deit:main', 'deit_tiny_patch16_224', pretrained=True)
-        self.vit.head = nn.Linear(self.vit.head.in_features, num_classes)
-
-    def forward(self, x):
-        x = F.interpolate(x, size=(224, 224))
-        x = self.vit(x)
-        return x
 
 # Caricamento del dataset CORe50
-benchmark = CORe50(scenario="ni")
+benchmark = CORe50(scenario="nc",mini=True)
 
-# Logger
-interactive_logger = InteractiveLogger()
 
-# Definizione del plugin di valutazione
+# Creazione del logger di TensorBoard
+tb_logger = TensorboardLogger()
+
 # Plugin per la valutazione
-eval_plugin = EvaluationPlugin(
+eval_plugin = EvaluationPlugin(    
     accuracy_metrics(minibatch=True, epoch=True, experience=True, stream=True),
     loss_metrics(minibatch=True, epoch=True, experience=True, stream=True),
     timing_metrics(epoch=True, epoch_running=True),
-    forgetting_metrics(experience=True, stream=True),
-    loggers=[interactive_logger]
+    forgetting_metrics(experience=True, stream=True),\
+    loggers=[tb_logger])
+"""
+# Definizione del plugin di valutazione con TensorBoard
+eval_plugin = EvaluationPlugin(
+    accuracy_metrics(minibatch=True, epoch=True, experience=True, stream=True),
+    loss_metrics(minibatch=True, epoch=True, experience=True, stream=True),
+    loggers=[tb_logger]
 )
-
-
+"""
 # Lista dei modelli
 models = [SimpleCNN(num_classes=benchmark.n_classes)]
 
@@ -79,6 +61,7 @@ models = [SimpleCNN(num_classes=benchmark.n_classes)]
 for model in models:
     
     print(f"Training model: {model.__class__.__name__}")
+
     # Definizione della strategia EWC
     cl_strategy = EWC(
         model=model,
@@ -91,7 +74,12 @@ for model in models:
         device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
         evaluator=eval_plugin
     )
-
+    # Esecuzione dell'allenamento e valutazione
     for experience in benchmark.train_stream:
+        print(f"Training on experience {experience.current_experience}")
         cl_strategy.train(experience)
+        print("Training completed")
+        
+        print("Evaluating on test stream")
         cl_strategy.eval(benchmark.test_stream)
+        print("Evaluation completed")
