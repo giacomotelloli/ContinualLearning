@@ -16,10 +16,9 @@ Using one kind of model from the Avalanche library.
 
 For each CL method will be developed some of the techniques suggested by the paper
 
-We will use more than one neural network model , stacked by the network complexity 
-- SMALL (SimpleMLP)
-- MEDIUM ()
-- LARGE  ()
+We will use a simple convolutional neural network model to challenge the algorithms 
+
+
 
 ---
 
