@@ -25,3 +25,10 @@ We will use a simple convolutional neural network model to challenge the algorit
 Data source : https://vlomonaco.github.io/core50/
 
 Model source: https://avalanche.continualai.org/
+
+---
+## Project Phases
+1) Write the code for every CL technique 
+2) Store the performances in logs 
+3) Assemble graphs to show how the accuracy evolves during the CL process 
+
