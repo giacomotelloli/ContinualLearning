@@ -1,0 +1,4 @@
+pytorch
+pandas 
+tensorboard
+avalanche
