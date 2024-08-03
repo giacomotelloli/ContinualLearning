@@ -1,4 +1,4 @@
 pytorch
 pandas 
 tensorboard
-avalanche
+avalanche-lib
