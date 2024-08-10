@@ -1,4 +1,5 @@
-pytorch
+torch
 pandas 
 tensorboard
 avalanche-lib
+torchvision
